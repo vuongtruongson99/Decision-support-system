@@ -1,0 +1,9 @@
+Solution|Salary(+);Size of company(+);Staff quality (+);Vacation(+)|Work time(-);Distance(-)
+Company A|63;4;5;20|6;30
+Company B|35;4;2;30|6;10
+Company C|49;5;4;36|8;20
+Company D|56;5;3;40|10;25
+Company E|28;2;3;60|5;12
+Company F|63;4;4;35|8;30
+Company G|42;3;2;24|7;5
+Company H|45.5;5;3;35|8;20
