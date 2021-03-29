@@ -48,7 +48,7 @@ def cal_D(alternatives):
                     P += float(weight_crit[1][neg_criterion])     
                 elif float(c_alternatives[i][2][neg_criterion]) > float(c_alternatives[j][2][neg_criterion]):
                     N += float(weight_crit[1][neg_criterion])
-                    
+
             if N == 0:
                 continue
             elif P == 0:
@@ -97,11 +97,22 @@ def remove_circle(mD):
 
     for i in lst:
         graph = get_graph(D, i)
-        
+
         if cyclic(graph) == True:
             continue
         else:
             return graph
+
+def find_root(graph, V):
+    indegree = [0] * V
+    for i in graph:
+        for j in graph[i]:
+            indegree[j] += 1
+    
+    for i in range(V):
+        if indegree[i] == 0:
+            return i
+    
 
 def level_graph(G, V, x):
     level = [None] * V
@@ -121,14 +132,16 @@ def level_graph(G, V, x):
         l.append(alternatives[i+1][0])
         l.append(level[i])
         ans.append(l)
+
     ans.sort(key = lambda x : x[1])
     return ans
 
 
 input_data()
+V = len(alternatives) - 1
 D = cal_D(alternatives)
 g = remove_circle(D)
-ans = level_graph(g, 8, 0)
+ans = level_graph(g, V, find_root(g, V))
 
 print("Alternatives: ")
 print_alternative(alternatives)
