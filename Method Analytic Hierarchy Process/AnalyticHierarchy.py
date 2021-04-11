@@ -79,13 +79,6 @@ if not check_acceptable():
             w += W[0][j] * W[j + 1][i]    
         priority.append(w)
 
-for index, key in enumerate(alternatives):
-    print(key + " has priority: " + str(priority[index]))
-
-
-
-
-
-
-
-
+    for index, key in enumerate(alternatives):
+        print(key + " has priority: " + str(priority[index]))
+    
