@@ -1,18 +1,23 @@
-# 3x1 + 2x2 -> max/min
-# x1 + 2x2 <= 6
-# 2x1 + x2 <= 8
-# -x1 + x2 <= 1
-# x2 <= 2
-
 import operator
 from copy import copy, deepcopy
 
-C = [3, 2]          # Objective function: 15x1 + 5x2 + 3x3 + 20x4
-B = [6, 8, 1, 2]    # Right-side of constraints
-A = [[1, 2],        # Left-side of constraints
-    [2, 1],
-    [-1, 1],
-    [0, 1]]
+fa = open("data/function1.txt")
+
+minmax = str(fa.readline().replace("\n", ""))
+C = list(map(int, fa.readline().split()))
+B = list(map(int, fa.readline().split()))
+A = []
+for f in fa:
+    A.append(list(map(int, f.split())))
+
+if minmax == "MIN":
+    print("-------------------")
+    for i in range(0, len(C)):
+        C[i] = (-1) * C[i]
+
+
+print(C)
+
 Cb = [0] * len(A)   
 F = [None] * (len(C))
 Q = 0
@@ -20,10 +25,10 @@ Q = 0
 Basic = []
 Non_basic = []
 for i in range(len(C)):
-    Non_basic.append("x_" + str(i + 1))
+    Non_basic.append("x" + str(i + 1))
 
 for i in range(len(A)):
-    Basic.append("x_" + str(i + len(C) + 1))
+    Basic.append("x" + str(i + len(C) + 1))
 
 
 def printTable(Basic, Non_basic, C, B, A, Cb, F, Q):
@@ -63,6 +68,7 @@ for i in range(len(Cb)):
 
 
 iter = 1
+check2 = False
 while(True):
 
     print("----------------------------------")
@@ -94,6 +100,7 @@ while(True):
 
     r_min = float("inf")
     row = 0
+    check = False
     for i in range(0, len(A)):
         if A[i][F.index(min_f)] == 0:
             continue
@@ -103,6 +110,12 @@ while(True):
             if (r > 0 and r < r_min):
                 r_min = r
                 row = i
+                check = True
+    if check == False:
+        print("Cannot solve this problem!")
+        check2 = True
+        break
+
     print("Pivot Row: " + Basic[row])
     print("Pivot Element: " + str(A[row][F.index(min_f)]))
 
@@ -153,10 +166,11 @@ while(True):
 
     iter += 1
 
-print("----------------------------------")
-print("Final Table reached in", iter, "iterations")
-print("Coefficients: ")
-for i in range(len(Basic)):
-    if Cb[i] != 0:
-        print("\t" + Basic[i] + ": " + str(B[i]))
-print("Optimal value: " + str(Q))
+if check2 == False:
+    print("----------------------------------")
+    print("Final Table reached in", iter, "iterations")
+    print("Coefficients: ")
+    for i in range(len(Basic)):
+        if Cb[i] != 0:
+            print("\t" + Basic[i] + ": " + str(B[i]))
+    print("Optimal value: " + str(Q))
