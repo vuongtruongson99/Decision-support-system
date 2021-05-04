@@ -11,12 +11,8 @@ for f in fa:
     A.append(list(map(int, f.split())))
 
 if minmax == "MIN":
-    print("-------------------")
     for i in range(0, len(C)):
         C[i] = (-1) * C[i]
-
-
-print(C)
 
 Cb = [0] * len(A)   
 F = [None] * (len(C))
